@@ -14,11 +14,11 @@ let allJobsSection = document.getElementById("allJobs");
 
 function allJobCount(count) {
   const allJobs = document.getElementById("allJobs");
-
+  let counts = allJobs.children.length;
   if (count >= 0) {
-    jobCount.innerText = count;
+    jobCount.innerText = count + " of " + counts + " Jobs";
   } else {
-    jobCount.innerText = allJobs.children.length;
+    jobCount.innerText = counts + " Jobs";
   }
 
   totalJobNumberShow.innerText = allJobs.children.length;
@@ -52,7 +52,7 @@ let allJobs = document.getElementById("allJobs");
 
 allJobs.addEventListener("click", function (event) {
   const parentNode = event.target.parentNode.parentNode;
-  console.log(parentNode);
+
   const companyName = parentNode.querySelector(".companyName").innerText;
   const position = parentNode.querySelector(".position").innerText;
   const location = parentNode.querySelector(".location").innerText;
@@ -126,6 +126,18 @@ allJobs.addEventListener("click", function (event) {
   }
 });
 
+interviewJobSection.addEventListener("click", function (event) {
+  const parentNode = event.target.parentNode.parentNode;
+  const companyName = parentNode.querySelector(".companyName");
+  const position = parentNode.querySelector(".position");
+  console.log(event.target.classList.contains("rejected"));
+  if (event.target.classList.contains("rejected")) {
+    interViewJob = interViewJob.filter(
+      (job) => !(job.companyName == companyName && job.position == position),
+    );
+  }
+});
+
 //Toggle Job Status btn
 function toggleBtn(id) {
   allJobBtn.classList.remove("btn-primary");
@@ -137,69 +149,24 @@ function toggleBtn(id) {
 
   if (id === "allJobBtn") {
     allJobCount();
-    allJobsSection.classList.remove("hidden");
-    allJobsSection.classList.add("flex");
-
-    rejectedJobSection.classList.remove("flex");
-    rejectedJobSection.classList.add("hidden");
-
-    interviewJobSection.classList.remove("flex");
-    interviewJobSection.classList.add("hidden");
+    addHiddenClass();
+    removeHiddenClass(allJobsSection);
   }
 
   if (id === "interviewJobBtn") {
     allJobCount(interViewJob.length);
-    allJobsSection.classList.remove("flex");
-    allJobsSection.classList.add("hidden");
-
-    rejectedJobSection.classList.remove("flex");
-    rejectedJobSection.classList.add("hidden");
-
-    interviewJobSection.classList.remove("hidden");
-    interviewJobSection.classList.add("flex");
+    addHiddenClass();
+    removeHiddenClass(interviewJobSection);
 
     if (interViewJob.length > 0) {
       interviewJobSection.replaceChildren();
 
-      interViewJob.forEach((jobData) => {
-        let div = document.createElement("div");
-
-        div.innerHTML = `<div class="card card-dash bg-base-100 w-full">
-          <div class="card-body gap-3">
-            <h2 class="companyName text-2xl font-semibold">
-           ${jobData.companyName}
-            </h2>
-            <h4 class="text-xl position">${jobData.position}</h4>
-            <div class="flex gap-3 text-base">
-              <span class="location">${jobData.location}</span>
-              <span class="type">${jobData.type}</span>
-              <span class="salary">${jobData.salary}</span>
-            </div>
-
-            <div><button class="btn jobCardStatusBtn bg-green-500 text-white">Applied Job</button></div>
-
-            <p class="text-base description">
-              ${jobData.description}
-            </p>
-            <div class="flex gap-2">
-              <button
-                id="interview-btn"
-
-                class="btn interview text-green-400 font-semibold bg-white border-green-500 hover:bg-green-500 hover:text-white"
-              >
-                Interview
-              </button>
-              <button
-                class="btn rejected text-red-400 font-semibold bg-white border-red-500 hover:bg-red-500 hover:text-white"
-              >
-                Rejected
-              </button>
-            </div>
-          </div>
-        </div>`;
-
-        interviewJobSection.appendChild(div);
-      });
+      interViewJob.forEach((jobData) =>
+        displayCard(jobData, interviewJobSection, {
+          status: "Applied Job",
+          bgColor: "bg-green-500",
+        }),
+      );
     } else {
       let div = document.createElement("div");
 
@@ -211,56 +178,19 @@ function toggleBtn(id) {
 
   if (id === "rejectedJobBtn") {
     allJobCount(rejectedJob.length);
-    allJobsSection.classList.remove("flex");
-    allJobsSection.classList.add("hidden");
 
-    interviewJobSection.classList.remove("flex");
-    interviewJobSection.classList.add("hidden");
+    addHiddenClass();
 
-    rejectedJobSection.classList.remove("hidden");
-    rejectedJobSection.classList.add("flex");
-    console.log(rejectedJob.length);
+    removeHiddenClass(rejectedJobSection);
+
     if (rejectedJob.length > 0) {
       rejectedJobSection.replaceChildren();
-      rejectedJob.forEach((jobData) => {
-        let div = document.createElement("div");
-
-        div.innerHTML = `<div class="card card-dash bg-base-100 w-full">
-          <div class="card-body gap-3">
-            <h2 class="companyName text-2xl font-semibold">
-           ${jobData.companyName}
-            </h2>
-            <h4 class="text-xl position">${jobData.position}</h4>
-            <div class="flex gap-3 text-base">
-              <span class="location">${jobData.location}</span>
-              <span class="type">${jobData.type}</span>
-              <span class="salary">${jobData.salary}</span>
-            </div>
-
-            <div><button class="btn jobCardStatusBtn bg-red-500 text-white">Rejected Job</button></div>
-
-            <p class="text-base description">
-              ${jobData.description}
-            </p>
-            <div class="flex gap-2">
-              <button
-                id="interview-btn"
-
-                class="btn interview text-green-400 font-semibold bg-white border-green-500 hover:bg-green-500 hover:text-white"
-              >
-                Interview
-              </button>
-              <button
-                class="btn rejected text-red-400 font-semibold bg-white border-red-500 hover:bg-red-500 hover:text-white"
-              >
-                Rejected
-              </button>
-            </div>
-          </div>
-        </div>`;
-
-        rejectedJobSection.appendChild(div);
-      });
+      rejectedJob.forEach((jobData) =>
+        displayCard(jobData, rejectedJobSection, {
+          status: "Rejected Job",
+          bgColor: "bg-red-500",
+        }),
+      );
     } else {
       let div = document.createElement("div");
 
@@ -270,3 +200,17 @@ function toggleBtn(id) {
     }
   }
 }
+
+// Implement Rejected And Interview function on interview and rejected job section
+
+// interviewJobSection.addEventListener("click", function (event) {
+//   const parentNode = event.target.parentNode.parentNode;
+//   const companyName = parentNode.querySelector(".companyName");
+//   const position = parentNode.querySelector(".position");
+//   console.log(event.target.classList.contains("rejected"));
+//   if (event.target.classList.contains("rejected")) {
+//     interViewJob = interViewJob.filter(
+//       (job) => !(job.companyName == companyName && job.position == position),
+//     );
+//   }
+// });

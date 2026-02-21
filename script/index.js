@@ -24,13 +24,15 @@ const allJobs = document.getElementById("allJobs");
 
 allJobs.addEventListener("click", function (event) {
   const parentNode = event.target.parentNode.parentNode;
-
+  console.log(parentNode);
   const companyName = parentNode.querySelector(".companyName").innerText;
   const position = parentNode.querySelector(".position").innerText;
   const location = parentNode.querySelector(".location").innerText;
   const type = parentNode.querySelector(".type").innerText;
   const salary = parentNode.querySelector(".salary").innerText;
   const description = parentNode.querySelector(".description").innerText;
+
+  let jobCardStatusBtn = parentNode.querySelector(".jobCardStatusBtn");
 
   const jobData = {
     companyName,
@@ -55,6 +57,9 @@ allJobs.addEventListener("click", function (event) {
 
     if (!existJob) {
       interViewJob.push(jobData);
+      jobCardStatusBtn.innerText = "Applied Job";
+      jobCardStatusBtn.classList.remove("bg-red-500", "text-white");
+      jobCardStatusBtn.classList.add("bg-green-500", "text-white");
       rejectedJob = rejectedJob.filter(
         (job) =>
           !(
@@ -78,7 +83,9 @@ allJobs.addEventListener("click", function (event) {
 
     if (!existJob) {
       rejectedJob.push(jobData);
-
+      jobCardStatusBtn.innerText = "Rejected Job";
+      jobCardStatusBtn.classList.remove("bg-green-500", "text-white");
+      jobCardStatusBtn.classList.add("bg-red-500", "text-white");
       interViewJob = interViewJob.filter(
         (job) =>
           !(
@@ -90,3 +97,5 @@ allJobs.addEventListener("click", function (event) {
     }
   }
 });
+
+//

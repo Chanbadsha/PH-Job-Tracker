@@ -17,48 +17,112 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <script src="index.js"></script>
   </head>
   <body class="bg-[#F8FAFC]">
     <header
-      class="max-w-11/12 lg:max-w-10/12 mx-auto border text-center md:text-left py-3 lg:py-6"
+      class="max-w-11/12 lg:max-w-10/12 mx-auto text-center md:text-left py-3 lg:py-6"
     >
       <h1 class="text-2xl *: lg:text-5xl font-bold">Job Application Tracker</h1>
       <section class="job-info-section flex gap-3 pt-6">
         <div class="card card-dash bg-base-100 w-full">
           <div class="card-body">
             <h2 class="card-title text-xl">Total</h2>
-            <p class="font-bold text-xl">12</p>
+            <p id="totalJobNumberShow" class="font-bold text-xl">0-</p>
           </div>
         </div>
         <div class="card card-dash bg-base-100 w-full">
           <div class="card-body">
             <h2 class="card-title text-xl">Interview</h2>
-            <p class="text-green-500 font-bold text-xl">12</p>
+            <p
+              id="interviewJobNumberShow"
+              class="text-green-500 font-bold text-xl"
+            >
+              0
+            </p>
           </div>
         </div>
         <div class="card card-dash bg-base-100 w-full">
           <div class="card-body">
             <h2 class="card-title text-xl">Rejected</h2>
-            <p class="text-red-500 font-bold text-xl">12</p>
+            <p
+              id="rejectedJobNumberShow"
+              class="text-red-500 font-bold text-xl"
+            >
+              0
+            </p>
           </div>
         </div>
-
-        <!-- <div
-          id="job-info-card"
-          class="w-full bg-white shadow-[0px_1px_1px_rgba(0,0,0,0.35)]"
-        >
-          <p>Interview</p>
-          <p>0</p>
-        </div>
-        <div
-          id="job-info-card"
-          class="w-full bg-white shadow-[0px_1px_1px_rgba(0,0,0,0.35)]"
-        >
-          <p>Rejected</p>
-          <p>0</p>
-        </div> -->
       </section>
     </header>
+
+    <main class="max-w-11/12 lg:max-w-10/12 mx-auto pt-12 min-h-screen">
+      <section class="flex justify-between">
+        <h3 class="font-semibold text-xl lg:text-2xl">Available Jobs</h3>
+        <p><span id="job-count">0</span> Jobs</p>
+      </section>
+      <section class="flex justify-center gap-3 md:justify-start pt-6">
+        <button
+          id="all"
+          onclick="getInnerText('all')"
+          class="btn btn-primary rounded-lg px-6 md:px-12 hover:bg-blue-800 hover:text-white"
+        >
+          All
+        </button>
+        <button
+          id="interview"
+          onclick="getInnerText('interview')"
+          class="btn rounded-lg px-6 md:px-12 hover:bg-blue-800 hover:text-white"
+        >
+          Interview
+        </button>
+        <button
+          id="rejected"
+          onclick="getInnerText('rejected')"
+          class="btn rounded-lg px-6 md:px-12 hover:bg-blue-800 hover:text-white"
+        >
+          Rejected
+        </button>
+      </section>
+
+      <section id="allJobs" class="py-6 flex flex-col gap-6">
+        <div class="card card-dash bg-base-100 w-full">
+          <div class="card-body gap-3">
+            <h2 id="companyName" class="text-2xl font-semibold">
+              TechNova Solutions
+            </h2>
+            <h4 class="text-xl">Frontend Developer</h4>
+            <div class="flex gap-3 text-base">
+              <span>New York, NY</span>
+              <span>Full-time</span>
+              <span>$85,000 - $105,000</span>
+            </div>
+
+            <div><button class="btn">Not Applied</button></div>
+
+            <p class="text-base">
+              We are looking for a skilled Frontend Developer with experience in
+              React and modern JavaScript frameworks.
+            </p>
+            <div class="flex gap-2">
+              <button
+                id="interview-btn"
+                onclick="interViewJobClick()"
+                class="btn text-green-400 font-semibold bg-white border-green-500 hover:bg-green-500 hover:text-white"
+              >
+                Interview
+              </button>
+              <button
+                class="btn text-red-400 font-semibold bg-white border-red-500 hover:bg-red-500 hover:text-white"
+              >
+                Rejected
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="./script/utils.js"></script>
+    <script src="./script/index.js"></script>
   </body>
 </html>

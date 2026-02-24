@@ -25,9 +25,17 @@ function displayCard(jobData, sectionName) {
 
   div.innerHTML = `<div class="card card-dash bg-base-100 w-full">
           <div class="card-body gap-3">
+       <div class="flex justify-between items-center">
+       
             <h2 class="companyName text-2xl font-semibold">
            ${jobData.companyName}
             </h2>
+          <button class=" hover:text-white  hover:bg-red-500 hover:rounded-full hover:p-2 p-2 ">  <i class="fa-solid fa-trash deleteBtn"></i></button>
+       
+       
+       
+       
+       </div>
             <h4 class="text-xl position">${jobData.position}</h4>
             <div class="flex gap-3 text-base">
               <span class="location">${jobData.location}</span>
@@ -40,6 +48,9 @@ function displayCard(jobData, sectionName) {
             <p class="text-base description">
               ${jobData.description}
             </p>
+    
+
+            
             <div class="flex gap-2">
               <button
                 id="interview-btn"
@@ -54,6 +65,7 @@ function displayCard(jobData, sectionName) {
                 Rejected
               </button>
             </div>
+         
           </div>
         </div>`;
 

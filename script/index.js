@@ -112,26 +112,6 @@ let allJobsCollection = [
   },
 ];
 
-let allJobsSection = document.getElementById("allJobs");
-
-function loadData() {
-  if (allJobsCollection.length > 0) {
-    allJobsSection.replaceChildren();
-
-    allJobsCollection.forEach((jobData) =>
-      displayCard(jobData, allJobsSection),
-    );
-  } else {
-    let div = document.createElement("div");
-
-    // allJobsCollection.replaceChildren();
-    div.innerHTML = "<h1>No Data Show</h1>";
-    allJobsSection.appendChild(div);
-  }
-}
-
-loadData();
-
 let jobCount = document.getElementById("job-count");
 let totalJobNumberShow = document.getElementById("totalJobNumberShow");
 let rejectedJobNumberShow = document.getElementById("rejectedJobNumberShow");
@@ -142,16 +122,34 @@ let rejectedJobBtn = document.getElementById("rejectedJobBtn");
 let interviewJobSection = document.getElementById("interviewJobSection");
 let rejectedJobSection = document.getElementById("rejectedJobSection");
 
+let allJobsSection = document.getElementById("allJobs");
+
+function loadData(data) {
+  if (data.length > 0) {
+    allJobsSection.replaceChildren();
+
+    data.forEach((jobData) => displayCard(jobData, allJobsSection));
+  } else {
+    let div = document.createElement("div");
+
+    allJobsSection.replaceChildren();
+    div.innerHTML = "<h1>No Data Show</h1>";
+    allJobsSection.appendChild(div);
+  }
+}
+
+loadData(allJobsCollection);
+
 function allJobCount(count) {
-  const allJobs = document.getElementById("allJobs");
-  let counts = allJobs.children.length;
+  const allJobs = allJobsCollection.length;
+  let counts = allJobs;
   if (count >= 0) {
     jobCount.innerText = count + " of " + counts + " Jobs";
   } else {
     jobCount.innerText = counts + " Jobs";
   }
 
-  totalJobNumberShow.innerText = allJobs.children.length;
+  totalJobNumberShow.innerText = allJobs;
   rejectedJobNumberShow.innerText = rejectedJob.length;
   interviewJobNumberShow.innerText = interViewJob.length;
 }
@@ -174,7 +172,7 @@ function interViewJobClick() {
 let allJobs = document.getElementById("allJobs");
 
 allJobs.addEventListener("click", function (event) {
-  const parentNode = event.target.parentNode.parentNode;
+  const parentNode = event.target.parentNode.parentNode.parentNode;
 
   const companyName = parentNode.querySelector(".companyName").innerText;
   const position = parentNode.querySelector(".position").innerText;
@@ -191,6 +189,19 @@ allJobs.addEventListener("click", function (event) {
     salary,
     description,
   };
+
+  if (event.target.classList.contains("deleteBtn")) {
+    allJobsCollection = allJobsCollection.filter(
+      (job) =>
+        !(
+          job.companyName == jobData.companyName &&
+          job.position == jobData.position
+        ),
+    );
+
+    allJobCount(allJobsCollection);
+    loadData(allJobsCollection);
+  }
 
   if (event.target.classList.contains("interview")) {
     let existJob;

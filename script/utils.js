@@ -72,6 +72,21 @@ function displayCard(jobData, sectionName) {
   sectionName.appendChild(div);
 }
 
+function displayNoDataCard(sectionName) {
+  sectionName.replaceChildren();
+  let div = document.createElement("div");
+  div.innerHTML = `
+<div class=" w-full bg-white text-center rounded-lg gap-2 lg:gap-3 min-h-[300px] lg:min-h-[400px] flex justify-center items-center flex-col">
+<i class="fa-solid fa-clipboard-list text-3xl md:text-4xl  lg:text-6xl font-bold"></i>
+<h1 class=" text-2xl md:text-3xl lg:text-5xl font-bold ">No Jobs Available</h1>
+
+
+<p>Check back soon for new job opportunities</p>
+</div> `;
+
+  sectionName.appendChild(div);
+}
+
 function addHiddenClass() {
   allJobsSection.classList.remove("flex");
   allJobsSection.classList.add("hidden");

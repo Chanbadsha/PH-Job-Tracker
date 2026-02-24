@@ -37,7 +37,7 @@ function displayCard(jobData, sectionName) {
        
        </div>
             <h4 class="text-xl position">${jobData.position}</h4>
-            <div class="flex gap-3 text-base">
+            <div class="flex gap-3 text-sm md:text-base">
               <span class="location">${jobData.location}</span>
               <span class="type">${jobData.type}</span>
               <span class="salary">${jobData.salary}</span>

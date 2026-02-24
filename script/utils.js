@@ -1,10 +1,26 @@
-function getInnerText(id) {
-  const innerText = document.getElementById(id).innerText;
+function getJobData(event) {
+  const parentNode = event.target.parentNode.parentNode;
 
-  return innerText;
+  const companyName = parentNode.querySelector(".companyName").innerText;
+  const position = parentNode.querySelector(".position").innerText;
+  const location = parentNode.querySelector(".location").innerText;
+  const type = parentNode.querySelector(".type").innerText;
+  const salary = parentNode.querySelector(".salary").innerText;
+  const description = parentNode.querySelector(".description").innerText;
+
+  const jobData = {
+    companyName,
+    location,
+    position,
+    type,
+    salary,
+    description,
+  };
+
+  return jobData;
 }
 
-function displayCard(jobData, sectionName, statusSection) {
+function displayCard(jobData, sectionName) {
   let div = document.createElement("div");
 
   div.innerHTML = `<div class="card card-dash bg-base-100 w-full">
@@ -19,7 +35,7 @@ function displayCard(jobData, sectionName, statusSection) {
               <span class="salary">${jobData.salary}</span>
             </div>
 
-            <div><button class="btn ${statusSection.bgColor} jobCardStatusBtn  text-white">${statusSection.status}</button></div>
+            <div><button class="btn  jobCardStatusBtn bg-black  text-white">Not Applied</button></div>
 
             <p class="text-base description">
               ${jobData.description}
@@ -58,4 +74,14 @@ function addHiddenClass() {
 function removeHiddenClass(value) {
   value.classList.remove("hidden");
   value.classList.add("flex");
+}
+
+function jobCardStatusBtn(parentNode, innerText, removeBgColor, addBgColor) {
+  console.log(parentNode);
+  let jobCardStatusBtns = parentNode.querySelector(".jobCardStatusBtn");
+  console.log(jobCardStatusBtns.innerText);
+  jobCardStatusBtns.innerText = innerText;
+  console.log(jobCardStatusBtns.innerText);
+  // jobCardStatusBtns.classList.remove(removeBgColor, "text-white");
+  // jobCardStatusBtns.classList.add(addBgColor, "text-white");
 }

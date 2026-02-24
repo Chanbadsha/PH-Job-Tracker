@@ -345,13 +345,7 @@ interviewJobSection.addEventListener("click", function (event) {
         displayCard(jobData, interviewJobSection),
       );
     } else {
-      let div = document.createElement("div");
-
-      interviewJobSection.replaceChildren();
-      div.innerHTML = "<h1>No Data Show</h1>";
-      interviewJobSection.appendChild(div);
-
-      // displayNoDataCard(interviewJobSection)
+      displayNoDataCard(interviewJobSection);
     }
   }
 });
@@ -398,11 +392,7 @@ rejectedJobSection.addEventListener("click", function (event) {
         displayCard(jobData, rejectedJobSection),
       );
     } else {
-      let div = document.createElement("div");
-
-      rejectedJobSection.replaceChildren();
-      div.innerHTML = "<h1>No Data Show</h1>";
-      rejectedJobSection.appendChild(div);
+      displayNoDataCard(rejectedJobSection);
     }
   }
 });

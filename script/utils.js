@@ -20,7 +20,7 @@ function getJobData(event) {
   return jobData;
 }
 
-function displayCard(jobData, sectionName) {
+function displayCard(jobData, sectionName, statusIcon) {
   let div = document.createElement("div");
 
   div.innerHTML = `<div class="card card-dash bg-base-100 w-full">
@@ -43,7 +43,7 @@ function displayCard(jobData, sectionName) {
               <span class="salary">${jobData.salary}</span>
             </div>
 
-            <div><button class="btn  jobCardStatusBtn bg-black  text-white">Not Applied</button></div>
+            <div><button class="btn  jobCardStatusBtn ${statusIcon.bgColor} ${statusIcon.textColor}">${statusIcon.status}</button></div>
 
             <p class="text-base description">
               ${jobData.description}

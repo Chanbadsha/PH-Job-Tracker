@@ -131,7 +131,13 @@ function loadData(data) {
   if (data.length > 0) {
     allJobsSection.replaceChildren();
 
-    data.forEach((jobData) => displayCard(jobData, allJobsSection));
+    data.forEach((jobData) =>
+      displayCard(jobData, allJobsSection, {
+        status: "Not Applied",
+        bgColor: "bg-black",
+        textColor: "text-white",
+      }),
+    );
   } else {
     displayNoDataCard(allJobsSection);
   }
@@ -276,7 +282,11 @@ function toggleBtn(id) {
       interviewJobSection.replaceChildren();
 
       interViewJob.forEach((jobData) =>
-        displayCard(jobData, interviewJobSection),
+        displayCard(jobData, interviewJobSection, {
+          status: "Applied Job",
+          bgColor: "bg-green-500",
+          textColor: "text-white",
+        }),
       );
     } else {
       displayNoDataCard(interviewJobSection);
@@ -293,7 +303,11 @@ function toggleBtn(id) {
     if (rejectedJob.length > 0) {
       rejectedJobSection.replaceChildren();
       rejectedJob.forEach((jobData) =>
-        displayCard(jobData, rejectedJobSection),
+        displayCard(jobData, rejectedJobSection, {
+          status: "Rejected Job",
+          bgColor: "bg-red-500",
+          textColor: "text-white",
+        }),
       );
     } else {
       displayNoDataCard(rejectedJobSection);
@@ -342,7 +356,11 @@ interviewJobSection.addEventListener("click", function (event) {
       interviewJobSection.replaceChildren();
 
       interViewJob.forEach((jobData) =>
-        displayCard(jobData, interviewJobSection),
+        displayCard(jobData, interviewJobSection, {
+          status: "Applied",
+          bgColor: "bg-green-500",
+          textColor: "text-white",
+        }),
       );
     } else {
       displayNoDataCard(interviewJobSection);
@@ -389,7 +407,11 @@ rejectedJobSection.addEventListener("click", function (event) {
       rejectedJobSection.replaceChildren();
 
       rejectedJob.forEach((jobData) =>
-        displayCard(jobData, rejectedJobSection),
+        displayCard(jobData, rejectedJobSection, {
+          status: "Rejected Job",
+          bgColor: "bg-red-500",
+          textColor: "text-white",
+        }),
       );
     } else {
       displayNoDataCard(rejectedJobSection);
